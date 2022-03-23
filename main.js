@@ -77,3 +77,69 @@ const pedrito = new Student3({
   name: 'Pablito',
   age: 28,
 });
+
+////////////////////ADVANTAGES OF OOP////////////////////////
+
+const miguel = {
+  name: 'Miguelangel Diaz Cabezas',
+  username: 'mdiazc',
+  points: 1395,
+  socialMedia: {
+    twitter: 'mdiazc',
+    instagram: 'mdiazc',
+    facebook: 'mdiazc',
+  },
+  approvedCourses: [
+    'Flujo moderno con CodeStream',
+    'Curso Básico de Javascript',
+    'Curso Práctico de Javascript',
+  ],
+  learningPaths: [
+    {
+      name: 'Escuela de desarrollo Web',
+      courses: [
+        'Flujo moderno con CodeStream',
+        'Curso Básico de Javascript',
+        'Curso Práctico de Javascript',
+      ],
+    },
+    {
+      name: 'Escuela de videojuegos',
+      courses: ['Curso de Unrealengine', 'Curso de Unitiy en 3D'],
+    },
+  ],
+};
+
+const jose = {
+  name: 'Jose Riazcos',
+  username: 'jriazcos',
+  points: 1395,
+  socialMedia: {
+    twitter: 'mdiazc',
+    instagram: 'mdiazc',
+    facebook: undefined,
+  },
+  approvedCourses: [
+    'Flujo moderno con CodeStream',
+    'Curso Básico de Javascript',
+    'Curso Práctico de Javascript',
+  ],
+  learningPaths: [
+    {
+      name: 'Escuela de UX',
+      courses: ['Curso de git y github', 'Curso de introducción al diseño'],
+    },
+    {
+      name: 'Escuela de desarrollo Web',
+      courses: [
+        'Flujo moderno con CodeStream',
+        'Curso Básico de Javascript',
+        'Curso Práctico de Javascript',
+      ],
+    },
+    {
+      name: 'Escuela de videojuegos',
+      courses: ['Curso de Unrealengine', 'Curso de Unitiy en 3D'],
+    },
+  ],
+};
