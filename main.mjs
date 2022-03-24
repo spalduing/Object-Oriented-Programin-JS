@@ -195,3 +195,30 @@ const cursoProgBasica = new Course({
 
 // cursoProgBasica.name // calls the get name()
 // cursoProgrBasica.name = "lalalalalalala...la // calls the set name(newName)"
+
+////////////////////FILE ENCAPSULATION////////////////////////
+
+function videoPlay(id) {
+  const secretURL = 'https::/www.platzi.com/' + id;
+  console.log(`Se esta reproduciendo desde la url:  ${secretURL}`);
+}
+
+function videoStop(id) {
+  const secretURL = 'https::/www.platzi.com/' + id;
+  console.log(`Se pausó la url: ${secretURL}`);
+}
+
+export class PlatziClass {
+  constructor({ name, videoID }) {
+    this.name = name;
+    this.videoID = videoID;
+  }
+
+  reproducir() {
+    videoPlay(this.videoID);
+  }
+
+  pausar() {
+    videoStop(this.videoID);
+  }
+}
