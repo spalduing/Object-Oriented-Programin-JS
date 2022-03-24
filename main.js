@@ -143,3 +143,29 @@ const jose = {
     },
   ],
 };
+
+////////////////////ABSTRACTION////////////////////////
+class Learning {
+  constructor({ name, courses = [] }) {
+    this.name = name;
+    this.courses = courses;
+  }
+}
+
+const escuelaWeb = new Learning({
+  name: 'Escuela de desarrollo web',
+  courses: [
+    'Flujo moderno con codestream',
+    'Curso definitivo de html y css',
+    'Curso practico de html y css',
+  ],
+});
+const escuelaDataScientist = new Learning({
+  name: 'Escuela data Science',
+  courses: ['Flujo DataBuisiness', 'Curso visualización de datos'],
+});
+
+const escuelaVideojuegos = new Learning({
+  name: 'Escuela data Science',
+  courses: ['Curso de Unrealengine', 'Curso de Unitiy en 3D'],
+});
