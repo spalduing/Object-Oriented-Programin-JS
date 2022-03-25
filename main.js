@@ -258,6 +258,15 @@ class Student {
     this.approvedCourses = approvedCourses;
     this.learningPaths = learningPaths;
   }
+
+  publicarComentario(contentComent) {
+    const comentario = new Comment({
+      content: contentComent,
+      studentName: this.name,
+    });
+
+    comentario.publicar();
+  }
 }
 class FreeStudent extends Student {
   constructor(props) {
@@ -296,6 +305,25 @@ class ExpertStudent extends Student {
     this.approvedCourses.push(newCourse);
   }
 }
+class TeacherStudent extends Student {
+  constructor(props) {
+    super(props);
+  }
+
+  approveCourses(newCourse) {
+    this.approvedCourses.push(newCourse);
+  }
+
+  publicarComentario(contentComent) {
+    const comentario = new Comment({
+      content: contentComent,
+      studentName: this.name,
+      studentRole: 'profesor',
+    });
+
+    comentario.publicar();
+  }
+}
 
 const pedrito2 = new FreeStudent({
   name: 'Pedrito2',
@@ -329,20 +357,49 @@ function FreeStudentt(props) {
   new Student.call(this, props);
 }
 
-FreeStudentt.prototype = Object.create(Student.prototype);
-// FreeStudentt.prototype.constructor = FreeStudentt;
+// FreeStudentt.prototype = Object.create(Student.prototype);
+// // FreeStudentt.prototype.constructor = FreeStudentt;
 
-FreeStudentt.prototype.approveCourse = function (newCourse) {
-  if (newCourse.isFree) {
-    this.approvedCourses.push(newCourse);
-  } else {
-    console.warn(`Lo sentimos ${this.name} solo puedes tomar cursos abiertos`);
+// FreeStudentt.prototype.approveCourse = function (newCourse) {
+//   if (newCourse.isFree) {
+//     this.approvedCourses.push(newCourse);
+//   } else {
+//     console.warn(`Lo sentimos ${this.name} solo puedes tomar cursos abiertos`);
+//   }
+// };
+
+// const pedrito5 = new FreeStudentt({
+//   name: 'Pedrito3',
+//   age: 28,
+// });
+
+// pedrito5.approveCourse(cursoPracticoHTML);
+
+////////////////////POLYMORPHISM////////////////////////
+
+class Comment {
+  constructor({ content, studentName, studentRole = 'estudiante' }) {
+    this.content = content;
+    this.studentName = studentName;
+    this.content = content;
+    this.studentRole = studentRole;
+    this.likes = 0;
   }
-};
 
-const pedrito5 = new FreeStudentt({
-  name: 'Pedrito3',
-  age: 28,
+  publicar() {
+    console.log(`${this.studentName}  (${this.studentRole})`);
+    console.log(`${this.likes} Likes`);
+    console.log(`   ${this.content}`);
+  }
+}
+
+pedrito4.publicarComentario('Hola mundo');
+
+const freddy = new TeacherStudent({
+  name: 'Freddy Vega',
+  age: 31,
+  approvedCourses: [cursoProgBasica, cursoDefinitivoHTML, cursoPracticoHTML],
+  learningPaths: [escuelaWeb, escuelaDataScientist, escuelaVideojuegos],
 });
 
-pedrito5.approveCourse(cursoPracticoHTML);
+freddy.publicarComentario('Hi');
