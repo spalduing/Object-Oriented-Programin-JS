@@ -14,7 +14,7 @@ const natalia = {
 
 natalia.aprovarCurso('Curso de responsive design');
 
-function Student(name, age, cursosAprobados) {
+function Student0(name, age, cursosAprobados) {
   this.name = name;
   this.age = age;
   this.cursosAprobados = cursosAprobados;
@@ -24,11 +24,11 @@ function Student(name, age, cursosAprobados) {
   //   };
 }
 
-Student.prototype.aprovarCurso = function (nuevoCurso) {
+Student0.prototype.aprovarCurso = function (nuevoCurso) {
   this.cursosAprobados.push(nuevoCurso);
 };
 
-const juanita = new Student('Juanita', 25, ['Scope y Closure']);
+const juanita = new Student0('Juanita', 25, ['Scope y Closure']);
 
 // Class Syntax Prototypes (Syntactic Sugar)
 
@@ -171,9 +171,11 @@ const escuelaVideojuegos = new Learning({
 });
 
 class Course {
-  constructor({ name, classes = [] }) {
+  constructor({ name, classes = [], isFree = false, lang = 'spanish' }) {
     this._name = name;
     this.classes = classes;
+    this.isFree = isFree;
+    this.lang = lang;
   }
 
   get name() {
@@ -191,6 +193,16 @@ class Course {
 
 const cursoProgBasica = new Course({
   name: 'Curso gratis de programación básica',
+  isFree: true,
+});
+
+const cursoDefinitivoHTML = new Course({
+  name: 'Curso definitivo de HTML',
+});
+
+const cursoPracticoHTML = new Course({
+  name: 'Curso práctico de HTML',
+  lang: 'english',
 });
 
 // cursoProgBasica.name // calls the get name()
@@ -208,7 +220,8 @@ function videoStop(id) {
   console.log(`Se pausó la url: ${secretURL}`);
 }
 
-export class PlatziClass {
+class PlatziClass {
+  // export class PlatziClass {
   constructor({ name, videoID }) {
     this.name = name;
     this.videoID = videoID;
@@ -222,3 +235,114 @@ export class PlatziClass {
     videoStop(this.videoID);
   }
 }
+
+////////////////////INHERITANCE////////////////////////
+
+class Student {
+  constructor({
+    name = '',
+    age = 0,
+    facebook = '',
+    instagram = '',
+    email = '',
+    approvedCourses = [],
+    learningPaths = [],
+  }) {
+    this.name = name;
+    this.age = age;
+    this.socialMedia = {
+      facebook,
+      instagram,
+      email,
+    };
+    this.approvedCourses = approvedCourses;
+    this.learningPaths = learningPaths;
+  }
+}
+class FreeStudent extends Student {
+  constructor(props) {
+    super(props);
+  }
+  approveCourses(newCourse) {
+    if (newCourse.isFree) {
+      this.approvedCourses.push(newCourse);
+    } else {
+      console.warn(
+        `Lo sentimos ${this.name} solo puedes tomar cursos abiertos`
+      );
+    }
+  }
+}
+class BasicStudent extends Student {
+  constructor(props) {
+    super(props);
+  }
+
+  approveCourses(newCourse) {
+    if (newCourse.lang !== 'english') {
+      this.approvedCourses.push(newCourse);
+    } else {
+      console.warn(`Lo sentimos ${this.name} no puedes tomar cursos en ingles`);
+    }
+  }
+}
+
+class ExpertStudent extends Student {
+  constructor(props) {
+    super(props);
+  }
+
+  approveCourses(newCourse) {
+    this.approvedCourses.push(newCourse);
+  }
+}
+
+const pedrito2 = new FreeStudent({
+  name: 'Pedrito2',
+  age: 28,
+});
+
+pedrito2.approveCourses(cursoProgBasica);
+pedrito2.approveCourses(cursoDefinitivoHTML);
+
+const pedrito3 = new BasicStudent({
+  name: 'Pedrito3',
+  age: 28,
+});
+
+pedrito3.approveCourses(cursoProgBasica);
+pedrito3.approveCourses(cursoDefinitivoHTML);
+pedrito3.approveCourses(cursoPracticoHTML);
+
+const pedrito4 = new ExpertStudent({
+  name: 'Pedrito4',
+  age: 28,
+});
+
+pedrito4.approveCourses(cursoProgBasica);
+pedrito4.approveCourses(cursoDefinitivoHTML);
+pedrito4.approveCourses(cursoPracticoHTML);
+
+////////////////////INHERITANCE WITHOUT SYNTACTIC SUGAR////////////////////////
+
+function FreeStudentt(props) {
+  new Student.call(this, props);
+}
+
+FreeStudentt.prototype = Object.create(Student.prototype);
+// FreeStudentt.prototype.constructor = FreeStudentt;
+
+FreeStudentt.prototype.approveCourse = function (newCourse) {
+  if (newCourse.isFree) {
+    this.approvedCourses.push(newCourse);
+  } else {
+    console.warn(`Lo sentimos ${this.name} solo puedes tomar cursos abiertos`);
+  }
+};
+
+const pedrito5 = new FreeStudentt({
+  name: 'Pedrito3',
+  age: 28,
+});
+
+pedrito5.approveCourse(cursoPracticoHTML);
