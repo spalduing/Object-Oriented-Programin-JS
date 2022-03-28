@@ -403,3 +403,62 @@ const freddy = new TeacherStudent({
 });
 
 freddy.publicarComentario('Hi');
+
+////////////////////STATIC METHODS AND VARIABLES////////////////////////
+
+class Pato {
+  static sonido = 'cuak!';
+  static hacerSonido() {
+    // return sonido; // error: sonido is not defined
+    return 'CUAK!';
+  }
+}
+
+console.log(Pato.sonido);
+console.log(Pato.hacerSonido());
+
+const objeto = {
+  name: '',
+  email: '',
+  age: '',
+};
+
+Object.keys(objeto);
+// ['name', 'email', 'age']
+
+Object.getOwnPropertyNames(objeto);
+// ['name', 'email', 'age']
+
+Object.entries(objeto);
+/*
+  [
+    0: ['name', 'juanito'],
+    1: ['email', 'juannito@gmail.com'],
+    2: ['age', 24],
+  ] */
+
+Object.getOwnPropertyDescriptors(objeto);
+/*
+name: {
+  value: "juanito",
+  writable: true,
+  configurable: true,
+  enumerable: true,
+}
+*/
+
+const juan = {
+  name: 'Juan.',
+  age: 19,
+  approvedCourses: ['curso1'],
+  addCourse(newCourse) {
+    console.log('this', this);
+    this.approvedCourses.push(newCourse);
+    console.log('this.approvedCourses', this.approvedCourses);
+  },
+};
+
+console.log(Object.keys(juan));
+console.log(Object.entries(juan));
+console.log(Object.getOwnPropertyNames(juan));
+console.log(Object.getOwnPropertyDescriptors(juan));
