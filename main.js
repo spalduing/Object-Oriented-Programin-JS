@@ -522,3 +522,20 @@ const obj5 = JSON.parse(obj1Stringnified);
 console.log(obj1);
 console.log(obj2);
 console.groupEnd();
+
+////////////////////RECURSION////////////////////////
+console.group('////////////////////RECURSION////////////////////////');
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 4234];
+
+function recursion(numbersArray) {
+  if (numbersArray.length !== 0) {
+    const num = numbersArray[0];
+    console.log(num);
+    numbersArray.shift();
+    recursion(numbersArray);
+  }
+  return 1;
+}
+
+recursion(numbers);
+console.groupEnd();
