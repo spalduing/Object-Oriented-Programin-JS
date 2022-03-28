@@ -461,4 +461,36 @@ const juan = {
 console.log(Object.keys(juan));
 console.log(Object.entries(juan));
 console.log(Object.getOwnPropertyNames(juan));
+
+Object.defineProperty(juan, 'navigator', {
+  value: 'Chrome',
+  writable: false,
+  enumerableble: true,
+  configurable: true,
+});
+
+Object.defineProperty(juan, 'editor', {
+  value: 'VSCode',
+  writable: true,
+  enumerable: false,
+  configurable: true,
+});
+
+Object.defineProperty(juan, 'terminal', {
+  value: 'WSL',
+  writable: true,
+  enumerable: true,
+  configurable: false,
+});
+
+Object.defineProperty(juan, 'pruebaNasa', {
+  value: 'estraterrestres',
+  writable: false,
+  enumerable: false,
+  configurable: false,
+});
+
+Object.seal(juan); // Set the 'configurable' property to false in all the objcet properties
+Object.freeze(juan); // Set the 'configurable and writable' property to false in all the objcet properties
+
 console.log(Object.getOwnPropertyDescriptors(juan));
