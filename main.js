@@ -494,3 +494,31 @@ Object.seal(juan); // Set the 'configurable' property to false in all the objcet
 Object.freeze(juan); // Set the 'configurable and writable' property to false in all the objcet properties
 
 console.log(Object.getOwnPropertyDescriptors(juan));
+
+////////////////////SHALLOW COPY////////////////////////
+
+console.group('////////////////////SHALLOW COPY////////////////////////');
+const obj1 = {
+  a: 'a',
+  b: 'b,',
+  c: {
+    d: 'd',
+    e: 'e',
+  },
+};
+
+const obj2 = {};
+
+for (prop in obj1) {
+  obj2[prop] = obj1[prop];
+}
+
+const obj3 = Object.assign({}, obj1); // It presents the same problem of copying the pointer to the 'c' object of 'obj1'
+const obj4 = Object.create(obj1);
+
+const obj1Stringnified = JSON.stringify(obj1);
+const obj5 = JSON.parse(obj1Stringnified);
+
+console.log(obj1);
+console.log(obj2);
+console.groupEnd();
