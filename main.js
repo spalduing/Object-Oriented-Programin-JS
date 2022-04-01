@@ -505,7 +505,7 @@ const obj1 = {
     d: 'd',
     e: 'e',
   },
-  f: function () {
+  saluteee() {
     console.log('Im a function');
   },
 };
@@ -590,4 +590,34 @@ function deepCoppy(subject) {
 const obj6 = deepCoppy(obj1);
 
 console.log('obj6: ', obj6);
+console.groupEnd();
+
+////////////////////ABSTRACTION AND ENCAPSULATION WITHOUT PROTOTYPES////////////////////////
+console.group(
+  '////////////////////ABSTRACTION AND ENCAPSULATION WITHOUT PROTOTYPES////////////////////////'
+);
+
+const studentBase = {
+  name: undefined,
+  email: undefined,
+  age: undefined,
+  approvedCourses: undefined,
+  learningPaths: [],
+  socialMedia: {
+    twitter: undefined,
+    facebook: undefined,
+    instagram: undefined,
+  },
+};
+
+const pedro = deepCoppy(studentBase);
+
+// Object.defineProperty(pedro, 'name', {
+//   value: 'San Pedro',
+//   configurable: false,
+// });
+
+Object.seal(pedro);
+
+console.log('pedro: ', pedro);
 console.groupEnd();
