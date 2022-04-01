@@ -622,12 +622,46 @@ Object.seal(pedro);
 console.log('pedro: ', pedro);
 console.groupEnd();
 
-////////////////////Factory Pattern////////////////////////
-console.group('////////////////////Factory Pattern////////////////////////');
-
 function requiredParam(param) {
   throw new Error(`'${param}' | This parameter is mandatory`);
 }
+
+////////////////////DUCKTYPING////////////////////////
+console.group('////////////////////DUCKTYPING////////////////////////');
+
+function createLearningPath({
+  name = requiredParam('name'),
+  courses = [],
+} = {}) {
+  const private = {
+    _name: name,
+    _courses: courses,
+  };
+
+  const public = {
+    get name() {
+      return private._name;
+    },
+
+    set name(newName) {
+      if (newName.length != 0) {
+        private._name = newName;
+      } else {
+        console.warn('Your name must have at least one letter');
+      }
+    },
+
+    get courses() {
+      return private._courses;
+    },
+  };
+
+  return public;
+}
+console.groupEnd();
+
+////////////////////Factory Pattern////////////////////////
+console.group('////////////////////Factory Pattern////////////////////////');
 
 function createStudent({
   name = requiredParam('name'),
@@ -641,18 +675,10 @@ function createStudent({
 } = {}) {
   const private = {
     _name: name,
+    _learningPaths: learningPaths,
   };
 
   const public = {
-    email,
-    age,
-    approvedCourses,
-    learningPaths,
-    socialMedia: {
-      twitter,
-      facebook,
-      instagram,
-    },
     get name() {
       return private._name;
     },
@@ -663,6 +689,38 @@ function createStudent({
         console.warn('Your name must have at least one letter');
       }
     },
+    email,
+    age,
+    approvedCourses,
+    get learningPaths() {
+      return private._learningPaths;
+    },
+
+    set learningPaths(newLP) {
+      if (!newLP.name) {
+        console.warn("Your LP don't contains 'name' property");
+        return;
+      }
+
+      if (!newLP.courses) {
+        console.warn("Your LP don't contains 'courses' property  ");
+        return;
+      }
+
+      if (!isArray(newLP.courses)) {
+        console.warn("Your LP don't contains a list of  'courses'  ");
+        return;
+      }
+
+      const newLearningPath = createLearningPath(newLP);
+      private._learningPaths.push(newLearningPath);
+    },
+    socialMedia: {
+      twitter,
+      facebook,
+      instagram,
+    },
+
     // readName() {
     //   return private._name;
     // },
@@ -671,15 +729,15 @@ function createStudent({
     // },
   };
 
-  Object.defineProperty(public, 'readName', {
-    writable: false,
-    configurable: false,
-  });
+  // Object.defineProperty(public, 'readName', {
+  //   writable: false,
+  //   configurable: false,
+  // });
 
-  Object.defineProperty(public, 'changeName', {
-    writable: false,
-    configurable: false,
-  });
+  // Object.defineProperty(public, 'changeName', {
+  //   writable: false,
+  //   configurable: false,
+  // });
 
   return public;
 }
