@@ -639,8 +639,11 @@ function createStudent({
   facebook,
   instagram,
 } = {}) {
-  return {
-    name,
+  const private = {
+    _name: name,
+  };
+
+  const public = {
     email,
     age,
     approvedCourses,
@@ -650,8 +653,27 @@ function createStudent({
       facebook,
       instagram,
     },
+    readName() {
+      return private._name;
+    },
+    changeName(newName) {
+      private._name = newName;
+    },
   };
+
+  Object.defineProperty(public, 'readName', {
+    writable: false,
+    configurable: false,
+  });
+
+  Object.defineProperty(public, 'changeName', {
+    writable: false,
+    configurable: false,
+  });
+
+  return public;
 }
+
 const agustin = createStudent({
   name: 'Agustin',
   email: 'agustinino@gmail.com',
@@ -663,5 +685,10 @@ const agustin = createStudent({
 console.log('agustin: ', agustin);
 
 // const carmelo = createStudent(); // Thows an error
+
+console.groupEnd();
+
+////////////////////Module Pattern////////////////////////
+console.group('////////////////////Module Pattern////////////////////////');
 
 console.groupEnd();
