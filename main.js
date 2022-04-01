@@ -621,3 +621,47 @@ Object.seal(pedro);
 
 console.log('pedro: ', pedro);
 console.groupEnd();
+
+////////////////////Factory Pattern////////////////////////
+console.group('////////////////////Factory Pattern////////////////////////');
+
+function requiredParam(param) {
+  throw new Error(`'${param}' | This parameter is mandatory`);
+}
+
+function createStudent({
+  name = requiredParam('name'),
+  email = requiredParam('email'),
+  age,
+  approvedCourses = [],
+  learningPaths = [],
+  twitter,
+  facebook,
+  instagram,
+} = {}) {
+  return {
+    name,
+    email,
+    age,
+    approvedCourses,
+    learningPaths,
+    socialMedia: {
+      twitter,
+      facebook,
+      instagram,
+    },
+  };
+}
+const agustin = createStudent({
+  name: 'Agustin',
+  email: 'agustinino@gmail.com',
+  age: 45,
+  facebook: 'agustinino',
+  twitter: '@agustinino',
+});
+
+console.log('agustin: ', agustin);
+
+// const carmelo = createStudent(); // Thows an error
+
+console.groupEnd();
