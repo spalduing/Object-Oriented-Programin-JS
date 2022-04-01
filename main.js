@@ -505,6 +505,9 @@ const obj1 = {
     d: 'd',
     e: 'e',
   },
+  f: function () {
+    console.log('Im a function');
+  },
 };
 
 const obj2 = {};
@@ -538,4 +541,53 @@ function recursion(numbersArray) {
 }
 
 recursion(numbers);
+console.groupEnd();
+
+////////////////////DEEP COPY WITH RECURSION////////////////////////
+console.group(
+  '////////////////////DEEP COPY WITH RECURSION////////////////////////'
+);
+
+function isObject(subject) {
+  return typeof subject == 'object';
+}
+
+function isArray(subject) {
+  return Array.isArray(subject);
+}
+
+function deepCoppy(subject) {
+  let copySubject;
+
+  const subjectIsArray = isArray(subject);
+  const subjectIsObject = isObject(subject);
+
+  if (subjectIsArray) {
+    copySubject = [];
+  } else if (subjectIsObject) {
+    copySubject = {};
+  } else {
+    return subject;
+  }
+
+  for (key in subject) {
+    const keyIsObject = isObject(subject[key]);
+
+    if (keyIsObject) {
+      copySubject[key] = deepCoppy(subject[key]);
+    } else {
+      if (subjectIsArray) {
+        copySubject.push(subject[key]);
+      } else {
+        copySubject[key] = subject[key];
+      }
+    }
+  }
+
+  return copySubject;
+}
+
+const obj6 = deepCoppy(obj1);
+
+console.log('obj6: ', obj6);
 console.groupEnd();
