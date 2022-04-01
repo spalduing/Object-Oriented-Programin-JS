@@ -653,12 +653,22 @@ function createStudent({
       facebook,
       instagram,
     },
-    readName() {
+    get name() {
       return private._name;
     },
-    changeName(newName) {
-      private._name = newName;
+    set name(newName) {
+      if (newName.length != 0) {
+        private._name = newName;
+      } else {
+        console.warn('Your name must have at least one letter');
+      }
     },
+    // readName() {
+    //   return private._name;
+    // },
+    // changeName(newName) {
+    //   private._name = newName;
+    // },
   };
 
   Object.defineProperty(public, 'readName', {
@@ -691,4 +701,15 @@ console.groupEnd();
 ////////////////////Module Pattern////////////////////////
 console.group('////////////////////Module Pattern////////////////////////');
 
+console.groupEnd();
+
+////////////////////GETTERS AND SETTERS////////////////////////
+console.group(
+  '////////////////////GETTERS AND SETTERS////////////////////////'
+);
+
+console.log(
+  "Augustin's descriptors: ",
+  Object.getOwnPropertyDescriptors(agustin)
+);
 console.groupEnd();
