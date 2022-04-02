@@ -778,31 +778,6 @@ console.group('////////////////////INSTANCE OF////////////////////////');
 function LearningPath({ name = requiredParam('name'), courses = [] } = {}) {
   this.name = name;
   this.courses = courses;
-
-  // const private = {
-  //   _name: name,
-  //   _courses: courses,
-  // };
-
-  // const public = {
-  //   get name() {
-  //     return private._name;
-  //   },
-
-  //   set name(newName) {
-  //     if (newName.length != 0) {
-  //       private._name = newName;
-  //     } else {
-  //       console.warn('Your name must have at least one letter');
-  //     }
-  //   },
-
-  //   get courses() {
-  //     return private._courses;
-  //   },
-  // };
-
-  // return public;
 }
 
 function StudentProto({
@@ -815,34 +790,47 @@ function StudentProto({
   facebook,
   instagram,
 } = {}) {
-  if (!isArray(learningPaths)) {
-    console.warn('Your LerningPaths is no an array');
-    return;
-  }
-
-  for (learningPath in learningPaths) {
-    const isLearningPath = learningPaths[learningPath] instanceof LearningPath;
-
-    if (!isLearningPath) {
-      console.warn(
-        `${
-          learningPaths[learningPath.name]
-        } is not an instance of the LearningPath prototype`
-      );
-      return;
-    }
-  }
+  const private = {
+    _learningPaths: [],
+  };
 
   this.name = name;
   this.email = email;
   this.age = age;
   this.approvedCourses = approvedCourses;
-  this.learningPaths = learningPaths;
   this.socialMedia = {
     twitter,
     facebook,
     instagram,
   };
+
+  Object.defineProperty(this, 'learningPaths', {
+    get() {
+      return private._learningPaths;
+    },
+
+    set(newLP) {
+      const isLearningPath = newLP instanceof LearningPath;
+
+      if (!isLearningPath) {
+        console.warn(
+          `'${newLP.name}' is not an instance of the LearningPath prototype`
+        );
+        return;
+      }
+
+      private._learningPaths.push(newLP);
+    },
+  });
+
+  if (isArray(learningPaths)) {
+    learningPaths.forEach((learningPath) => {
+      this.learningPaths = learningPath;
+    });
+  } else {
+    console.warn('Your LerningPaths is no an array');
+    return;
+  }
 }
 
 const escuelaDesarrollo = new LearningPath({ name: 'Escuela desarrollo' });
@@ -853,9 +841,10 @@ const carmelo = new StudentProto({
   name: 'Carmelo',
   email: 'carmelino@gmail.com',
   age: 45,
-  learningPaths: [escuelaDesarrollo, escuelaDataSci],
+  // learningPaths: [escuelaDesarrollo, escuelaDataSci],
   // learningPaths: 1,
   // learningPaths: [escuelaDesarrollo, escuelaDataSci, escuelaNFT],
+  learningPaths: [escuelaDesarrollo, escuelaNFT, escuelaDataSci],
   facebook: 'carmelino',
   twitter: '@carmelino',
 });
