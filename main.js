@@ -771,3 +771,97 @@ console.log(
   Object.getOwnPropertyDescriptors(agustin)
 );
 console.groupEnd();
+
+////////////////////INSTANCE OF////////////////////////
+console.group('////////////////////INSTANCE OF////////////////////////');
+
+function LearningPath({ name = requiredParam('name'), courses = [] } = {}) {
+  this.name = name;
+  this.courses = courses;
+
+  // const private = {
+  //   _name: name,
+  //   _courses: courses,
+  // };
+
+  // const public = {
+  //   get name() {
+  //     return private._name;
+  //   },
+
+  //   set name(newName) {
+  //     if (newName.length != 0) {
+  //       private._name = newName;
+  //     } else {
+  //       console.warn('Your name must have at least one letter');
+  //     }
+  //   },
+
+  //   get courses() {
+  //     return private._courses;
+  //   },
+  // };
+
+  // return public;
+}
+
+function StudentProto({
+  name = requiredParam('name'),
+  email = requiredParam('email'),
+  age,
+  approvedCourses = [],
+  learningPaths = [],
+  twitter,
+  facebook,
+  instagram,
+} = {}) {
+  if (!isArray(learningPaths)) {
+    console.warn('Your LerningPaths is no an array');
+    return;
+  }
+
+  for (learningPath in learningPaths) {
+    const isLearningPath = learningPaths[learningPath] instanceof LearningPath;
+
+    if (!isLearningPath) {
+      console.warn(
+        `${
+          learningPaths[learningPath.name]
+        } is not an instance of the LearningPath prototype`
+      );
+      return;
+    }
+  }
+
+  this.name = name;
+  this.email = email;
+  this.age = age;
+  this.approvedCourses = approvedCourses;
+  this.learningPaths = learningPaths;
+  this.socialMedia = {
+    twitter,
+    facebook,
+    instagram,
+  };
+}
+
+const escuelaDesarrollo = new LearningPath({ name: 'Escuela desarrollo' });
+const escuelaDataSci = new LearningPath({ name: 'Escuela data science' });
+const escuelaNFT = { name: 'Escuela de nfts', courses: [] };
+
+const carmelo = new StudentProto({
+  name: 'Carmelo',
+  email: 'carmelino@gmail.com',
+  age: 45,
+  learningPaths: [escuelaDesarrollo, escuelaDataSci],
+  // learningPaths: 1,
+  // learningPaths: [escuelaDesarrollo, escuelaDataSci, escuelaNFT],
+  facebook: 'carmelino',
+  twitter: '@carmelino',
+});
+
+console.log('carmelo: ', carmelo);
+
+console.log(carmelo instanceof StudentProto);
+
+console.groupEnd();
